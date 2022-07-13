@@ -1,22 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:suitmedia_app/pages/first_page.dart';
+import 'package:suitmedia_app/providers/user_logger.dart';
+import 'package:suitmedia_app/providers/user_selector.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => UserSelector()),
+        ChangeNotifierProvider(create: (context) => UserLogger()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Flutter Demo',
-      home: Scaffold(
-        body: Center(
-          child: Text("halo"),
-        ),
+      theme: ThemeData(
+        textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
       ),
+      home: const FirstPage(),
     );
   }
 }
